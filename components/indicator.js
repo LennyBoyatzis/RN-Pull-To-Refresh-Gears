@@ -8,7 +8,6 @@ import React, {
 
 class Indicator extends Component {
     render() {
-        if (!this.props.status) return null;
         return(
           <View style={styles.refreshBar}>
             <Text style={styles.text}>
@@ -26,8 +25,7 @@ Indicator.defaultProps = {
 
 var styles = StyleSheet.create({
   refreshBar: {
-    marginTop: 10,
-    height: 40,
+    height: 60,
     backgroundColor: '#E94C89'
   },
   text: {

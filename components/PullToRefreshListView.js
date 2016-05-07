@@ -7,10 +7,7 @@ import {
   PixelRatio
 } from 'react-native'
 
-import {
-  RefresherListView,
-  LoadingBarIndicator
-} from 'react-native-refresher'
+import RefreshableListView from 'react-native-refreshable-listview'
 
 var Indicator = require('./indicator');
 
@@ -44,13 +41,13 @@ class PullToRefreshListView extends Component {
     return (
       <View style={styles.scrollview}>
         <View style={styles.topBar}><Text style={styles.navText}>Dribbble</Text></View>
-        <RefresherListView
+        <RefreshableListView
           dataSource={this.state.dataSource}
-          indicator={<Indicator />}
-          onRefresh={this.onRefresh.bind(this)}
-          refreshOnRelease={true}
-          threshold={1}
           renderRow={(rowData) => <View style={styles.row}><Text style={styles.text}>{rowData}</Text></View>}
+          loadData={this.onRefresh.bind(this)}
+          minDisplayTime={1000}
+          refreshingIndicatorComponent={Indicator}
+          refreshDescription="Refreshing articles"
         />
       </View>
     )
