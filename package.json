@@ -1,0 +1,14 @@
+{
+  "name": "PullToRefresh",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "art": "^0.10.1",
+    "react": "^0.14.8",
+    "react-native": "^0.25.1",
+    "react-native-refresher": "^0.1.1"
+  }
+}
