@@ -20,17 +20,6 @@ class PullToRefresh extends Component {
   render() {
     return (
       <PullToRefreshListView/>
-      // <NavigatorIOS
-      //   initialRoute={{
-      //     component: PullToRefreshListView,
-      //     title: 'Animated PTR'
-      //   }}
-      //   tintColor="#FFFFFF"
-      //   barTintColor="#ededed"
-      //   titleTextColor="#698EA0"
-      //   translucent={true}
-      //   style={styles.wrapper}
-      // />
     )
   }
 }
