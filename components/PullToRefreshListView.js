@@ -19,7 +19,8 @@ class PullToRefreshListView extends Component {
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.numRows = 0;
     this.state = {
-      dataSource: this.fillRows()
+      dataSource: this.fillRows(),
+      heightFromTop: 0
     }
   }
 
@@ -39,6 +40,12 @@ class PullToRefreshListView extends Component {
     });
   }
 
+  handleScroll(e) {
+    return this.setState({
+      heightFromTop: e.nativeEvent.contentOffset.y
+    });
+  }
+
   render() {
     return (
       <View style={styles.scrollview}>
@@ -48,8 +55,9 @@ class PullToRefreshListView extends Component {
           renderRow={(rowData) => <View style={styles.row}><Text style={styles.text}>{rowData}</Text></View>}
           loadData={this.onRefresh.bind(this)}
           minDisplayTime={1000}
-          refreshingIndicatorComponent={Indicator}
+          refreshingIndicatorComponent={<Indicator heightFromTop={this.state.heightFromTop}/>}
           refreshDescription="Refreshing articles"
+          onScroll={this.handleScroll.bind(this)}
         />
       </View>
     )

@@ -28,6 +28,7 @@ class Indicator extends Component {
     }
 
     render() {
+        console.log("this.props.heightFromTop", this.props.heightFromTop);
         return(
           <View style={styles.refreshBarRect}></View>
         )
