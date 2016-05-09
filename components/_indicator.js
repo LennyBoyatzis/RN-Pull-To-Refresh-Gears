@@ -9,14 +9,9 @@ import React, {
   Animated
 } from 'react-native';
 
-const {
-  Group,
-  Shape,
-  Surface,
-  Transform
-} = ReactART
-
 const { height, windowWidth } = Dimensions.get('window');
+
+import Svg, { Circle, Rect, Polyline, Path } from 'react-native-svg';
 
 class Indicator extends Component {
 
@@ -26,10 +21,9 @@ class Indicator extends Component {
         curveValue: new Animated.Value(0)
       }
     }
-
     render() {
         return(
-          <View style={styles.refreshBarRect}></View>
+
         )
     }
 }

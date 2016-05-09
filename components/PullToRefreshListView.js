@@ -4,7 +4,8 @@ import {
   Text,
   ListView,
   StyleSheet,
-  PixelRatio
+  PixelRatio,
+  PanResponder
 } from 'react-native'
 
 import RefreshableListView from 'react-native-refreshable-listview'
@@ -12,6 +13,7 @@ import RefreshableListView from 'react-native-refreshable-listview'
 var Indicator = require('./indicator');
 
 class PullToRefreshListView extends Component {
+
   constructor() {
     super();
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
