@@ -14,15 +14,16 @@ import React, {
 } from 'react-native'
 
 import PullToRefreshListView from './components/PullToRefreshListView'
+// import SampleApp from './components/SampleApp'
 
 class PullToRefresh extends Component {
-
   render() {
     return (
-      <PullToRefreshListView/>
+      <PullToRefreshListView />
     )
   }
 }
+// <SampleApp />
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -5,7 +5,8 @@ import {
   ListView,
   StyleSheet,
   PixelRatio,
-  PanResponder
+  PanResponder,
+  Animated
 } from 'react-native'
 
 import RefreshableListView from 'react-native-refreshable-listview'
@@ -22,6 +23,10 @@ class PullToRefreshListView extends Component {
       dataSource: this.fillRows(),
       heightFromTop: 0
     }
+  }
+
+  componentWillMount() {
+    this._animatedValue = new Animated.Value(0);
   }
 
   fillRows() {
@@ -47,6 +52,23 @@ class PullToRefreshListView extends Component {
   }
 
   render() {
+
+    let interpolatedColor = this._animatedValue.interpolate({
+      inputRange: [0, 10],
+      outputRange: ['rgba(255,255,255,1)', 'rgba(51,156,177,1)'],
+      extrapolate: 'clamp'
+    })
+
+    let event = Animated.event([
+      {
+        nativeEvent: {
+          contentOffset: {
+            y: this._animatedValue
+          }
+        }
+      }
+    ])
+
     return (
       <View style={styles.scrollview}>
         <View style={styles.topBar}><Text style={styles.navText}>Dribbble</Text></View>
@@ -54,10 +76,11 @@ class PullToRefreshListView extends Component {
           dataSource={this.state.dataSource}
           renderRow={(rowData) => <View style={styles.row}><Text style={styles.text}>{rowData}</Text></View>}
           loadData={this.onRefresh.bind(this)}
-          minDisplayTime={1000}
-          refreshingIndicatorComponent={<Indicator heightFromTop={this.state.heightFromTop}/>}
-          refreshDescription="Refreshing articles"
-          onScroll={this.handleScroll.bind(this)}
+          minDisplayTime={2000}
+          refreshingIndicatorComponent={<Indicator contentOffset={this._animatedValue}/>}
+          minPulldownDistance={200}
+          onScroll={event}
+          scrollEventThrottle={16}
         />
       </View>
     )
@@ -93,7 +116,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: 30
   }
-
 })
 
 module.exports = PullToRefreshListView;

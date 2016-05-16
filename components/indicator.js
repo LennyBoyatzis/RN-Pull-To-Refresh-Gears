@@ -6,54 +6,42 @@ import React, {
   StyleSheet,
   Text,
   Dimensions,
-  Animated
+  Animated,
+  Image
 } from 'react-native';
-
-const {
-  Group,
-  Shape,
-  Surface,
-  Transform
-} = ReactART
 
 const { height, windowWidth } = Dimensions.get('window');
 
 class Indicator extends Component {
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        curveValue: new Animated.Value(0)
-      }
-    }
+  render() {
 
-    render() {
-        console.log("this.props.heightFromTop", this.props.heightFromTop);
-        return(
-          <View style={styles.refreshBarRect}></View>
-        )
-    }
+    const BALL_OFFSET = this.props.contentOffset._value > -40 ? 0
+    : this.props.contentOffset._value + 150
+    return(
+      <Animated.View style={[{height: Math.abs(this.props.contentOffset._value)}, styles.refreshBarRect]}>
+        <Image
+          style={{ top: 20 }}
+          source={require('../images/BBallRing.png')}
+        />
+        <Image
+          style={{bottom: BALL_OFFSET }}
+          source={require('../images/dribbble.png')}
+        />
+      </Animated.View>
+    )
+  }
 }
 
 Indicator.defaultProps = {
-    height: 30,
     position: 'top'
 }
 
 var styles = StyleSheet.create({
   refreshBarRect: {
-    height: 60,
-    backgroundColor: '#E94C89'
+    backgroundColor: '#e74d89',
+    alignItems: 'center'
   },
-  refreshBarCurve: {
-    height: windowWidth/2,
-    borderBottomLeftRadius: windowWidth/2,
-    borderBottomRightRadius: windowWidth/2,
-    backgroundColor: '#E94C89'
-  },
-  text: {
-    textAlign: 'center'
-  }
 });
 
 module.exports = Indicator
