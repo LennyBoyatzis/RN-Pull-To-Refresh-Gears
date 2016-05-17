@@ -13,6 +13,11 @@ import RefreshableListView from 'react-native-refreshable-listview'
 
 var Indicator = require('./indicator');
 
+// user pulls down to a certain threshold
+// they then release which triggers onRefresh
+// need list view to keep a certain top height
+// also need this.props.contentOffset._value to wind back to a certain value and stay until animation is complete
+
 class PullToRefreshListView extends Component {
 
   constructor() {
@@ -21,7 +26,8 @@ class PullToRefreshListView extends Component {
     this.numRows = 0;
     this.state = {
       dataSource: this.fillRows(),
-      heightFromTop: 0
+      refreshing: false,
+      listTop: 0
     }
   }
 
@@ -36,27 +42,20 @@ class PullToRefreshListView extends Component {
   }
 
   onRefresh() {
-    console.log("On Refresh...")
+    // this.refs.scrollView.setNativeProps({top: 150})
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve();
         this.setState({dataSource:this.fillRows()})
-      }, 500);
-    });
-  }
-
-  handleScroll(e) {
-    return this.setState({
-      heightFromTop: e.nativeEvent.contentOffset.y
+        // this.refs.scrollView.setNativeProps({top: 0})
+      }, 2000);
     });
   }
 
   render() {
-
-    let interpolatedColor = this._animatedValue.interpolate({
-      inputRange: [0, 10],
-      outputRange: ['rgba(255,255,255,1)', 'rgba(51,156,177,1)'],
-      extrapolate: 'clamp'
+    let interpolatedOpacity = this._animatedValue.interpolate({
+      inputRange: [-200, 0],
+      outputRange: [1, 0]
     })
 
     let event = Animated.event([
@@ -68,7 +67,6 @@ class PullToRefreshListView extends Component {
         }
       }
     ])
-
     return (
       <View style={styles.scrollview}>
         <View style={styles.topBar}><Text style={styles.navText}>Dribbble</Text></View>
@@ -77,10 +75,11 @@ class PullToRefreshListView extends Component {
           renderRow={(rowData) => <View style={styles.row}><Text style={styles.text}>{rowData}</Text></View>}
           loadData={this.onRefresh.bind(this)}
           minDisplayTime={2000}
-          refreshingIndicatorComponent={<Indicator contentOffset={this._animatedValue}/>}
+          refreshingIndicatorComponent={<Indicator contentOffset={this._animatedValue} opacity={interpolatedOpacity}/>}
           minPulldownDistance={200}
           onScroll={event}
           scrollEventThrottle={16}
+          ref='scrollView'
         />
       </View>
     )
