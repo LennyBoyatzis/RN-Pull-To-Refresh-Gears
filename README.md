@@ -1,5 +1,4 @@
 ##Pull to refresh animation with React Native
-----
 
 Concept by Michael B. Myers Jr.
 
