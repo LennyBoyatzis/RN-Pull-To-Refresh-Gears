@@ -12,13 +12,14 @@ const { height, windowWidth } = Dimensions.get('window');
 
 class GearsIndicator extends Component {
 
+
   render() {
     return (
       <View style={styles.background}>
         <Animated.Image
           style={[styles.gearOne, {
             transform: [
-              {rotate: this.props.anticlockwiseRotation}
+              {rotate: this.props.anticlockwiseRotation},
             ]
           }]}
           source={require('../images/GearOne.png')}

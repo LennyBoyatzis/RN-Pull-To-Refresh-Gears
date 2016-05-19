@@ -28,6 +28,7 @@ class PullToRefreshListView extends Component {
   }
 
   componentDidMount() {
+    this._animatedValue = new Animated.Value(0)
     this.state.scrollY.addListener((value) => this.handleScroll(value));
   }
 
@@ -89,7 +90,8 @@ class PullToRefreshListView extends Component {
       <View style={styles.scrollview}>
         <View style={styles.topBar}><Text style={styles.navText}>PTR Animation</Text></View>
         <View style={styles.fillParent}>
-          <CustomIndicator scrollPosition={this.state.scrollY} clockwiseRotation={interpolatedRotateClockwise} anticlockwiseRotation={interpolatedRotateAntiClockwise} />
+          <CustomIndicator
+            scrollPosition={this.state.scrollY} clockwiseRotation={interpolatedRotateClockwise} anticlockwiseRotation={interpolatedRotateAntiClockwise} refreshing={this.state.refreshing} />
         </View>
         <View style={styles.fillParent}>
           <ListView
