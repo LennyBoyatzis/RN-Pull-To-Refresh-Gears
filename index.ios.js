@@ -4,16 +4,17 @@
  * @flow
  */
 
-import React, {
+import React, { Component } from 'react'
+import {
   AppRegistry,
-  Component,
   View,
   Text,
   NavigatorIOS,
   StyleSheet
 } from 'react-native'
 
-import PullToRefreshListView from './components/PullToRefreshListView'
+// import PullToRefreshListView from './components/PullToRefreshListView'
+import PullToRefreshListView from './components/RefreshableListView'
 // import SampleApp from './components/SampleApp'
 
 class PullToRefresh extends Component {

@@ -1,5 +1,3 @@
-import ReactART from 'ReactNativeART'
-
 import React, {
   Component,
   View,
@@ -22,14 +20,11 @@ class Indicator extends Component {
          this._opacity = 1
        }
     } else {
-      console.log("TWO")
       this._contentOffset = nextProps.contentOffset._value
     }
   }
 
   render() {
-
-    console.log("this._contentOffset", this._contentOffset)
 
     const BALL_OFFSET = this._contentOffset > -50 ? 0
     : this._contentOffset + 155
