@@ -12,14 +12,78 @@ const { height, windowWidth } = Dimensions.get('window');
 
 class GearsIndicator extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = { animating: false }
+  }
+
+  componentWillMount() {
+    this._gearOneTranslate = new Animated.ValueXY()
+    this._gearTwoTranslate = new Animated.ValueXY()
+    this._gearThreeTranslateY = new Animated.ValueXY()
+    this._gearFourTranslate = new Animated.ValueXY()
+    this._gearFiveTranslate = new Animated.ValueXY()
+
+    this._gearThreeRotate = new Animated.Value(0)
+  }
+
+  triggerAnimation(cb) {
+    this.setState({ animating: true })
+    Animated.parallel([
+      Animated.timing(this._gearOneTranslate, {
+        toValue: { x: 100, y: 100 },
+        duration: 1000
+      }),
+      Animated.timing(this._gearTwoTranslate, {
+        toValue: { x: 200, y: -100 },
+        duration: 1000
+      }),
+      Animated.timing(this._gearFourTranslate, {
+        toValue: { x: -300, y: 100 },
+        duration: 1000
+      }),
+      Animated.timing(this._gearFiveTranslate, {
+        toValue: { x: -100, y: -200 },
+        duration: 1000
+      }),
+      Animated.timing(this._gearThreeRotate, {
+        toValue: 400,
+        duration: 3000
+      })
+    ]).start(cb)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.refreshing && !this.state.animating) {
+      console.log("Are we triggering the animation")
+      return this.triggerAnimation(() => {
+        this._gearOneTranslate.setValue({x: 0, y:0})
+        this._gearTwoTranslate.setValue({x: 0, y:0})
+        this._gearThreeTranslateY.setValue({x: 0, y:0})
+        this._gearFourTranslate.setValue({x: 0, y:0})
+        this._gearFiveTranslate.setValue({x: 0, y:0})
+        this._gearThreeRotate.setValue(0)
+        this.setState({ animating: false })
+      })
+    }
+  }
 
   render() {
+
+    var interpolatedGearThreeRotation = this._gearThreeRotate.interpolate({
+      inputRange: [0,200],
+      outputRange: ['0deg', '3000deg']
+    })
+
     return (
       <View style={styles.background}>
         <Animated.Image
           style={[styles.gearOne, {
             transform: [
               {rotate: this.props.anticlockwiseRotation},
+              {translateX: this._gearOneTranslate.x},
+              {translateY: this._gearOneTranslate.y},
             ]
           }]}
           source={require('../images/GearOne.png')}
@@ -27,7 +91,9 @@ class GearsIndicator extends Component {
         <Animated.Image
           style={[styles.gearTwo, {
             transform: [
-              {rotate: this.props.clockwiseRotation}
+              {rotate: this.props.clockwiseRotation},
+              {translateX: this._gearTwoTranslate.x},
+              {translateY: this._gearTwoTranslate.y}
             ]
           }]}
           source={require('../images/GearTwo.png')}
@@ -35,7 +101,9 @@ class GearsIndicator extends Component {
         <Animated.Image
           style={[styles.gearThree, {
             transform: [
-              {rotate: this.props.anticlockwiseRotation}
+              {rotate: this.state.animating ? interpolatedGearThreeRotation : this.props.anticlockwiseRotation},
+              {translateY: this._gearThreeTranslateY.y},
+              {translateX: this._gearThreeTranslateY.x}
             ]
           }]}
           source={require('../images/GearThree.png')}
@@ -43,7 +111,9 @@ class GearsIndicator extends Component {
         <Animated.Image
           style={[styles.gearFour, {
             transform: [
-              {rotate: this.props.clockwiseRotation}
+              {rotate: this.props.clockwiseRotation},
+              {translateX: this._gearFourTranslate.x},
+              {translateY: this._gearFourTranslate.y}
             ]
           }]}
           source={require('../images/GearFour.png')}
@@ -51,7 +121,9 @@ class GearsIndicator extends Component {
         <Animated.Image
           style={[styles.gearFive, {
             transform: [
-              {rotate: this.props.anticlockwiseRotation}
+              {rotate: this.props.anticlockwiseRotation},
+              {translateX: this._gearFiveTranslate.x},
+              {translateY: this._gearFiveTranslate.y}
             ]
           }]}
           source={require('../images/GearFive.png')}
@@ -70,25 +142,25 @@ const styles = StyleSheet.create({
   },
   gearOne: {
     position: 'absolute',
-    top: -30,
+    top: -35,
     left: 10
   },
   gearTwo: {
     position: 'absolute',
-    bottom: -30,
+    bottom: -25,
     left: 60
   },
   gearThree: {
-    marginTop: 50
+    marginTop: 45
   },
   gearFour: {
     position: 'absolute',
-    top: -30,
+    top: -35,
     right: 80
   },
   gearFive: {
     position: 'absolute',
-    bottom: -30,
+    bottom: -25,
     right: 30
   }
 })

@@ -51,8 +51,10 @@ class PullToRefreshListView extends Component {
   handleRelease(e) {
     if (this.state.readyToRefresh) {
       this.refs.PTRListView.scrollTo({y: -130});
+      this.setState({ refreshing: true })
       setTimeout(() => {
         this.refs.PTRListView.scrollTo({y: 0});
+        this.setState({ refreshing: false })
       }, 2000)
     }
     return this.setState({ readyToRefresh: false });
