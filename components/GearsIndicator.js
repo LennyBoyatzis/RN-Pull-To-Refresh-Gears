@@ -48,7 +48,7 @@ class GearsIndicator extends Component {
         duration: 1000
       }),
       Animated.timing(this._gearThreeRotate, {
-        toValue: 400,
+        toValue: 200,
         duration: 3000
       })
     ]).start(cb)

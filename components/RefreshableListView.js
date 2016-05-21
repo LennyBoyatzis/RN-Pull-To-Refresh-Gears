@@ -38,7 +38,7 @@ class PullToRefreshListView extends Component {
 
   fillRows() {
     this.numRows = 10;
-    var rows = Array.apply(0, new Array(this.numRows)).map((x,i) => `Request for invite ${i}`);
+    var rows = Array.apply(0, new Array(this.numRows)).map((x,i) => `Item No. ${i}`);
     return this.ds.cloneWithRows(rows);
   }
 
