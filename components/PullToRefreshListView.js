@@ -1,22 +1,20 @@
-import { Component } from 'react'
-import React, {
+import React, { Component } from 'react'
+import {
   View,
   Text,
   ListView,
   StyleSheet,
-  PixelRatio,
-  PanResponder,
   Animated
 } from 'react-native'
 
-import CustomIndicator from '../components/GearsIndicator'
+import GearsIndicator from '../components/GearsIndicator'
 
-const MIN_PULLDOWN_DISTANCE = 140;
+const MIN_PULLDOWN_DISTANCE = -140;
 
 class PullToRefreshListView extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.numRows = 0;
     this.state = {
@@ -28,7 +26,6 @@ class PullToRefreshListView extends Component {
   }
 
   componentDidMount() {
-    this._animatedValue = new Animated.Value(0)
     this.state.scrollY.addListener((value) => this.handleScroll(value));
   }
 
@@ -61,7 +58,7 @@ class PullToRefreshListView extends Component {
   }
 
   handleScroll(pullDownDistance) {
-    if (pullDownDistance.value <= -(MIN_PULLDOWN_DISTANCE)) {
+    if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
       return this.setState({ readyToRefresh: true })
     }
   }
@@ -92,7 +89,7 @@ class PullToRefreshListView extends Component {
       <View style={styles.scrollview}>
         <View style={styles.topBar}><Text style={styles.navText}>PTR Animation</Text></View>
         <View style={styles.fillParent}>
-          <CustomIndicator
+          <GearsIndicator
             scrollPosition={this.state.scrollY} clockwiseRotation={interpolatedRotateClockwise} anticlockwiseRotation={interpolatedRotateAntiClockwise} refreshing={this.state.refreshing} />
         </View>
         <View style={styles.fillParent}>

@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import React, { Component } from 'react'
+import {
   View,
   StyleSheet,
   Text,
@@ -14,7 +14,6 @@ class GearsIndicator extends Component {
 
   constructor(props) {
     super(props)
-
     this.state = { animating: false }
   }
 
@@ -24,7 +23,6 @@ class GearsIndicator extends Component {
     this._gearThreeTranslateY = new Animated.ValueXY()
     this._gearFourTranslate = new Animated.ValueXY()
     this._gearFiveTranslate = new Animated.ValueXY()
-
     this._gearThreeRotate = new Animated.Value(0)
   }
 

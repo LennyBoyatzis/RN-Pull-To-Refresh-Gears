@@ -13,9 +13,7 @@ import {
   StyleSheet
 } from 'react-native'
 
-// import PullToRefreshListView from './components/PullToRefreshListView'
-import PullToRefreshListView from './components/RefreshableListView'
-// import SampleApp from './components/SampleApp'
+import PullToRefreshListView from './components/PullToRefreshListView'
 
 class PullToRefresh extends Component {
   render() {
@@ -24,7 +22,6 @@ class PullToRefresh extends Component {
     )
   }
 }
-// <SampleApp />
 
 const styles = StyleSheet.create({
   wrapper: {
